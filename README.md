@@ -124,22 +124,22 @@ PRIVATE_KEY=
 
 ### Arbitrage Detector
 
-- `GET /health` - Service health check
-- `GET /status` - Detection statistics
-- `GET /config` - Current configuration
+- `GET api/health` - Service health check
+- `GET api/status` - Detection statistics
+- `GET api/config` - Current configuration
 
 ### Strategy Engine
 
-- `GET /health` - Service health check
-- `GET /queue` - Priority queue status
-- `POST /config` - Update scoring configuration
-- `GET /blacklist` - View blacklisted tokens
+- `GET api/health` - Service health check
+- `GET api/queue` - Priority queue status
+- `POST api/config` - Update scoring configuration
+- `GET api/blacklist` - View blacklisted tokens
 
 ### Gas Optimizer
 
-- `GET /health` - Service health check
-- `GET /gas/current` - Current gas information
-- `GET /gas/recommendations` - Gas price recommendations
+- `GET api/health` - Service health check
+- `GET api/gas/current` - Current gas information
+- `GET api/gas/recommendations` - Gas price recommendations
 - `POST /test/optimize` - Test gas optimization
 
 ## 🏗️ Smart Contracts

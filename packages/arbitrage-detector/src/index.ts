@@ -1,6 +1,6 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import { ArbitrageDetectorService } from './main.js';
+import express from "express";
+import dotenv from "dotenv";
+import { ArbitrageDetectorService } from "./main.js";
 
 // Load environment variables
 dotenv.config();
@@ -15,29 +15,29 @@ app.use(express.json());
 const arbitrageService = new ArbitrageDetectorService();
 
 // Health check endpoint
-app.get('/health', (_req, res) => {
-  res.json({ 
-    status: 'healthy', 
-    service: 'arbitrage-detector',
-    timestamp: new Date().toISOString()
+app.get("api/health", (_req, res) => {
+  res.json({
+    status: "healthy",
+    service: "arbitrage-detector",
+    timestamp: new Date().toISOString(),
   });
 });
 
 // Status endpoint
-app.get('/status', (_req, res) => {
+app.get("api/status", (_req, res) => {
   res.json({
     bufferStatus: arbitrageService.getBufferStatus(),
-    config: arbitrageService.getCalculatorConfig()
+    config: arbitrageService.getCalculatorConfig(),
   });
 });
 
 // Configuration endpoint
-app.post('/config', async (req, res) => {
+app.post("api/config", async (req, res) => {
   try {
     await arbitrageService.updateCalculatorConfig(req.body);
-    res.json({ success: true, message: 'Configuration updated' });
+    res.json({ success: true, message: "Configuration updated" });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to update configuration' });
+    res.status(500).json({ error: "Failed to update configuration" });
   }
 });
 
@@ -46,7 +46,7 @@ async function startServer() {
   try {
     // Start the arbitrage detection service
     await arbitrageService.start();
-    
+
     // Start the Express server
     app.listen(port, () => {
       console.log(`🚀 Arbitrage Detector Service running on port ${port}`);
@@ -54,20 +54,20 @@ async function startServer() {
       console.log(`📈 Status: http://localhost:${port}/status`);
     });
   } catch (error) {
-    console.error('Failed to start server:', error);
+    console.error("Failed to start server:", error);
     process.exit(1);
   }
 }
 
 // Graceful shutdown
-process.on('SIGINT', async () => {
-  console.log('Shutting down gracefully...');
+process.on("SIGINT", async () => {
+  console.log("Shutting down gracefully...");
   await arbitrageService.stop();
   process.exit(0);
 });
 
-process.on('SIGTERM', async () => {
-  console.log('Shutting down gracefully...');
+process.on("SIGTERM", async () => {
+  console.log("Shutting down gracefully...");
   await arbitrageService.stop();
   process.exit(0);
 });
